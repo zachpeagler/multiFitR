@@ -1,0 +1,14 @@
+Package: RdistUtils
+Type: Package
+Title: R distribution fitting utility functions
+Version: 0.1.0
+Author: Zach Peagler
+Maintainer: Zach Peagler <zachpeagler00@gmail.com>
+Description: 
+    A package of convenient functions to fit multiple PDFs, CDFs, and KS tests at once.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports:
+    MASS
+RoxygenNote: 7.3.2
