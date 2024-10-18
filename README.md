@@ -2,22 +2,32 @@
 #### RdistUtils
 [![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://opensource.org/license/mit)
 ![experimental](https://img.shields.io/badge/lifecycle-experimental-orange)
-![year](https://img.shields.io/badge/year-2024-darkblue)
+![year](https://img.shields.io/badge/year-2024-blue)
 
 # Description
 
-An R package that helps with fitting multiple proportional density functions (PDFs), cumulative distribution functions (CDFs), and Kolmogorov-Smirnov tests.
+An R package that helps with fitting multiple proportional density functions (PDFs), cumulative distribution functions (CDFs), and Kolmogorov-Smirnov tests at a time.
 
 ## Functions
 
 ### cont_distributions()
----
+
 #### Description
 This function returns a list of continuous distributions: "normal",
 "lognormal", "gamma", "exponential", "cauchy", "t", "weibull", and "logistic"
 #### Usage
 > cont_distributions()
 
+### eligible_distributions(x)
+---
+#### Description
+A function that returns the eligible distributions for a given input variable.
+
+#### Usage
+> eligible_distributions(x)
+
+#### Arguments
+- **x** - The variable for which to find distribution eligibility.
 
 ### multiPDF_cont()
 ---
