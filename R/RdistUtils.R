@@ -8,6 +8,21 @@ cont_distributions <- function() {
            "cauchy", "t", "weibull", "logistic"))
 }
 
+#' Eligible distributions
+#' 
+#' Returns the eligible distributions for a given variable.
+#' 
+#' @param x The variable for which to find ditribution eligibility.
+#' @export
+eligible_distributions <- function(x) {
+  if (is.null(x) == TRUE) {
+    return("Cannot find distributions for NULL values!")
+  }
+}
+
+
+
+
 #' Multiple Proportional Density Functions for Continuous Variables
 #'
 #' This function gets the proportional density functions for selected distributions
