@@ -1,6 +1,6 @@
-Package: multifit
+Package: multifitR
 Type: Package
-Title: R multifit
+Title: multifitR
 Version: 0.1.0
 Author: Zach Peagler
 Maintainer: Zach Peagler <zachpeagler00@gmail.com>
