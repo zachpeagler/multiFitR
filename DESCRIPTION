@@ -1,6 +1,6 @@
-Package: RdistUtils
+Package: multifit
 Type: Package
-Title: R distribution fitting utility functions
+Title: R multifit
 Version: 0.1.0
 Author: Zach Peagler
 Maintainer: Zach Peagler <zachpeagler00@gmail.com>

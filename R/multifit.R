@@ -447,3 +447,4 @@ multiCDF_plot <- function (x, seq_length, distributions) {
   }
   return(p)
 }
+
