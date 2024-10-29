@@ -1,4 +1,4 @@
-# R multifit
+# multiFitR
 [![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://opensource.org/license/mit)
 ![experimental](https://img.shields.io/badge/lifecycle-experimental-orange)
 ![year](https://img.shields.io/badge/year-2024-blue)

@@ -1,6 +1,6 @@
-Package: multifitR
+Package: multiFitR
 Type: Package
-Title: multifitR
+Title: multiFitR
 Version: 0.1.0
 Author: Zach Peagler
 Maintainer: Zach Peagler <zachpeagler00@gmail.com>
