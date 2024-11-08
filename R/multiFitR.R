@@ -4,8 +4,7 @@
 #'
 #' @export
 cont_distributions <- function() {
-  return(c("normal", "lognormal", "gamma", "exponential",
-           "cauchy", "t", "weibull", "logistic"))
+  return(c("normal", "lognormal", "gamma", "exponential"))
 }
 
 #' Multiple Proportional Density Functions for Continuous Variables
@@ -32,8 +31,7 @@ multiPDF_cont <- function(x, seq_length, distributions){
   pdf_df$dens = x_pdf$y
   ## see if "all" is in distributions
   if ("all" %in% distributions) {
-    distributions <- c("normal", "lognormal", "gamma", "exponential",
-                       "cauchy", "t", "weibull", "logistic")
+    distributions <- c("normal", "lognormal", "gamma", "exponential")
   }
 
   if ("normal" %in% distributions) {
@@ -58,29 +56,6 @@ multiPDF_cont <- function(x, seq_length, distributions){
     x_exp <- MASS::fitdistr(x, "exponential")
     x_pdf_exp <- dexp(x_seq, rate = x_exp$estimate)
     pdf_df$pdf_exponential = x_pdf_exp
-  }
-  if ("cauchy" %in% distributions) {
-    x_cau <- MASS::fitdistr(x, "cauchy")
-    x_pdf_cau <- dcauchy(x_seq, location=x_cau$estimate[1],
-                         scale = x_cau$estimate[2])
-    pdf_df$pdf_cauchy = x_pdf_cau
-  }
-  if ("t" %in% distributions) {
-    x_t <- MASS::fitdistr(x, "t")
-    x_pdf_t <- dt(x_seq, df = x_t$estimate[3])
-    pdf_df$pdf_t = x_pdf_t
-  }
-  if ("weibull" %in% distributions) {
-    x_wei <- MASS::fitdistr(x, "weibull")
-    x_pdf_wei <- dweibull(x_seq, shape = x_wei$estimate[1],
-                          scale = x_wei$estimate[2])
-    pdf_df$pdf_weibull = x_pdf_wei
-  }
-  if ("logistic" %in% distributions) {
-    x_logis <- MASS::fitdistr(x, "logistic")
-    x_pdf_logis <- dlogis(x_seq, x_logis$estimate[1],
-                          x_logis$estimate[2])
-    pdf_df$pdf_logistic = x_pdf_logis
   }
   ## return dataframe with pdfs
   return(pdf_df)
@@ -112,11 +87,7 @@ if ("all" %in% distributions) {
   distributions <- c("normal",
                      "lognormal",
                      "gamma",
-                     "exponential",
-                     "cauchy",
-                     "t",
-                     "weibull",
-                     "logistic")
+                     "exponential")
 }
 
 if ("normal" %in% distributions) {
@@ -142,30 +113,6 @@ if ("exponential" %in% distributions) {
   x_cdf_exp <- pexp(x_seq, rate = x_exp$estimate)
   cdf_df$cdf_exponential = x_cdf_exp
 }
-if ("cauchy" %in% distributions) {
-  x_cau <- MASS::fitdistr(x, "cauchy")
-  x_cdf_cau <- pcauchy(x_seq,
-                       location = x_cau$estimate[1],
-                       scale = x_cau$estimate[2])
-  cdf_df$cdf_cauchy = x_cdf_cau
-}
-if ("t" %in% distributions) {
-  x_t <- MASS::fitdistr(x, "t")
-  x_cdf_t <- pt(x_seq, df = x_t$estimate[3])
-  cdf_df$cdf_t = x_cdf_t
-}
-if ("weibull" %in% distributions) {
-  x_wei <- MASS::fitdistr(x, "weibull")
-  x_cdf_wei <- pweibull(x_seq, shape = x_wei$estimate[1],
-                        scale = x_wei$estimate[2])
-  cdf_df$cdf_weibull = x_cdf_wei
-}
-if ("logistic" %in% distributions) {
-  x_logis <- MASS::fitdistr(x, "logistic")
-  x_cdf_logis <- plogis(x_seq, x_logis$estimate[1],
-                        x_logis$estimate[2])
-  cdf_df$cdf_logistic = x_cdf_logis
-}
 
 return(cdf_df)
 }
@@ -188,11 +135,7 @@ multiKS_cont <- function(x, distributions) {
     distributions <- c("normal",
                        "lognormal",
                        "gamma",
-                       "exponential",
-                       "cauchy",
-                       "t",
-                       "weibull",
-                       "logistic")
+                       "exponential")
   }
   KS_df <- data.frame(matrix(ncol=3, nrow=0))
   colnames(KS_df) <- c("Distribution", "Distance", "P-Value")
@@ -253,63 +196,7 @@ multiKS_cont <- function(x, distributions) {
     else {"NA"}
     KS_df <- rbind(KS_df, KS_exp)
   }
-  if ("cauchy" %in% distributions) {
-    x_cau <- MASS::fitdistr(x, "cauchy")
-    x_KS_cau <- ks.test(x, "pcauchy",
-                        location = x_cau$estimate[1],
-                        scale = x_cau$estimate[2])
-    KS_cau <- data.frame(matrix(ncol=0, nrow=1))
-    KS_cau$Distribution <- "Cauchy"
-    KS_cau$Distance <- if (is.null(x_KS_cau$statistic)
-                           == FALSE) {x_KS_cau$statistic}
-    else {"NA"}
-    KS_cau$PValue <- if (is.null(x_KS_cau$p.value)
-                         == FALSE) {x_KS_cau$p.value}
-    else {"NA"}
-    KS_df <- rbind(KS_df, KS_cau)
-  }
-  if ("t" %in% distributions) {
-    x_t <- MASS::fitdistr(x, "t")
-    x_KS_t <- ks.test(x, "pt", df = x_t$estimate[3])
-    KS_t <- data.frame(matrix(ncol=0, nrow=1))
-    KS_t$Distribution <- "t"
-    KS_t$Distance <- if (is.null(x_KS_t$statistic)
-                         == FALSE) {x_KS_t$statistic}
-    else {"NA"}
-    KS_t$PValue <- if (is.null(x_KS_t$p.value)
-                       == FALSE) {x_KS_t$p.value}
-    else {"NA"}
-    KS_df <- rbind(KS_df, KS_t)
-  }
-  if ("weibull" %in% distributions) {
-    x_wei <- MASS::fitdistr(x, "weibull")
-    x_KS_wei <- ks.test(x, "pweibull",
-                        shape = x_wei$estimate[1],
-                        scale = x_wei$estimate[2])
-    KS_wei <- data.frame(matrix(ncol=0, nrow=1))
-    KS_wei$Distribution <- "Weibull"
-    KS_wei$Distance <- if (is.null(x_KS_wei$statistic)
-                           == FALSE) {x_KS_wei$statistic}
-    else {"NA"}
-    KS_wei$PValue <- if (is.null(x_KS_wei$p.value)
-                         == FALSE) {x_KS_wei$p.value}
-    else {"NA"}
-    KS_df <- rbind(KS_df, KS_wei)
-  }
-  if ("logistic" %in% distributions) {
-    x_logis <- MASS::fitdistr(x, "logistic")
-    x_KS_logis <- ks.test(x, "plogis", x_logis$estimate[1],
-                          x_logis$estimate[2])
-    KS_logis <- data.frame(matrix(ncol=0, nrow=1))
-    KS_logis$Distribution <- "Loglogistic"
-    KS_logis$Distance <- if (is.null(x_KS_logis$statistic)
-                             == FALSE) {x_KS_logis$statistic}
-    else {"NA"}
-    KS_logis$PValue <- if (is.null(x_KS_logis$p.value)
-                           == FALSE) {x_KS_logis$p.value}
-    else {"NA"}
-    KS_df <- rbind(KS_df, KS_logis)
-  }
+
   KS_df$Distribution = as.factor(KS_df$Distribution)
   KS_df$Distance = as.numeric(KS_df$Distance)
   KS_df$PValue = as.numeric(format(as.numeric(KS_df$PValue),
